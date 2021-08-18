@@ -1,30 +1,36 @@
-function limitation() {
-        error_messages[0].style.display = 'none';
-        error_messages[1].style.display = 'none';
-        error_messages[2].style.display = 'block';
-        generatePin();
+function limitation(positive) {
+    let tryNumber = document.getElementById('try');
+    let tryValue = parseInt(tryNumber.innerText);
+    if (positive) {
+        --tryValue;
+        tryNumber.innerText = tryValue;
+        if (tryValue == 0) {
+            error_messages[0].style.display = 'none';
+            error_messages[1].style.display = 'none';
+            error_messages[2].style.display = 'block';
+            generatePin();
+            tryValue = 3; 
+        }
+    } else {
+        tryValue = 3; 
+        tryNumber.innerText = tryValue;
+    }       
 }
 
 function checkSimilarity(number1, number2) {
     let error_messages = document.getElementsByClassName('notify');
-    let tryNumber = document.getElementById('try');
-    let tryValue = parseInt(tryNumber.innerText);
     if (number1 == number2) {
         error_messages[0].style.display = 'none';
         error_messages[1].style.display = 'block';
         document.getElementById('inputNumber').value = '';
         document.getElementById('showPin').value = '';
+        limitation(false);
     }
     else {
         error_messages[0].style.display = 'block';
         error_messages[1].style.display = 'none';
         document.getElementById('inputNumber').value = '';
-        --tryValue;
-        if (tryValue == 0) {
-            limitation();
-            tryValue = 3; 
-        }
-        tryNumber.innerText = tryValue;
+        limitation(true);
     }
 }
 
